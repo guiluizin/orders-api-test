@@ -54,9 +54,26 @@ class SixApiRunner extends Command
 
                 $order = $value['order'];
 
-                preg_match('/^[^ ]+/', $order['line_items'][0]['variant_title'], $matches); // get package quantity
+                $products = [];
 
-                $package = $matches[0] ?? null;
+                foreach($order['line_items'] as $product) {
+
+                    if($product['sku'] !== 'PRIORITY+INSUREDSHIPPING!') {
+
+                        preg_match('/^[^ ]+/', $product['variant_title'], $matches); // get package quantity
+
+                        $package = $matches[0] ?? null;
+
+                        $products[] = [
+                            'name' => $product['title'],
+                            'sku' => $product['sku'],
+                            'unit_quantity' => $product['quantity'],
+                            'package_quantity' => $package,
+                            'unit_price' => (float) $product['local_currency_item_price'],
+                            'total_price' => (float) $product['local_currency_item_total_price'],
+                        ];
+                    }  
+                }
 
                 $payload = [
                     'order' => [
@@ -80,14 +97,7 @@ class SixApiRunner extends Command
                         'created_at' => $order['customer']['created_at'],
                         'updated_at' => $order['customer']['updated_at'],
                     ],
-                    'product' => [
-                        'name' => $order['line_items'][0]['title'],
-                        'sku' => $order['line_items'][0]['sku'],
-                        'unit_quantity' => $order['line_items'][0]['quantity'],
-                        'package_quantity' => $package,
-                        'unit_price' => (float) $order['line_items'][0]['local_currency_item_price'],
-                        'total_price' => (float) $order['line_items'][0]['local_currency_item_total_price'],
-                    ],
+                    'products' => $products
                 ];
 
                 if(!empty($order['fulfillments'])) {
@@ -97,6 +107,17 @@ class SixApiRunner extends Command
                         'tracking' => $order['fulfillments'][0]['tracking_number'],
                         'created_at' => $order['fulfillments'][0]['created_at'],
                         'updated_at' => $order['fulfillments'][0]['updated_at'],
+                    ];
+                }
+
+                if(!empty($order['refunds'])) {
+
+                    $payload['refund'] = [
+                        'note' => $order['refunds'][0]['note'],
+                        'total_amount' => $order['refunds'][0]['total_amount'],
+                        'processed_at' => $order['refunds'][0]['created_at'],
+                        'created_at' => $order['refunds'][0]['created_at'],
+                        'updated_at' => $order['refunds'][0]['updated_at'],
                     ];
                 }
 

@@ -21,9 +21,7 @@ class OrderProduct extends Model
 
     protected $casts = [
         'unit_quantity' => 'integer',
-        'package_quantity' => 'integer',
-        'unit_price' => 'float',
-        'total_price' => 'float'
+        'package_quantity' => 'integer'
     ];
 
     public function order(): BelongsTo {

@@ -30,7 +30,6 @@ class Order extends Model
 
     protected $casts = [
         'number' => 'integer',
-        'total_paid' => 'float',
         'processed_at' => 'timestamp'
     ];
 
@@ -47,6 +46,11 @@ class Order extends Model
     public function shipping(): HasOne {
 
         return $this->hasOne(Shipping::class);
+    }
+
+    public function refund(): HasOne {
+
+        return $this->hasOne(Refund::class);
     }
 
     protected function totalPaid(): Attribute
