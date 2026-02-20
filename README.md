@@ -1,4 +1,4 @@
-# Projeto Grupo SIX - Teste Backend 
+# Projeto Grupo SIX - Teste Back-end 
 
 Este projeto foi desenvolvido utilizando **Laravel 12**.
 
@@ -8,7 +8,8 @@ Este projeto foi desenvolvido utilizando **Laravel 12**.
 
 - PHP 8.3+
 - Composer
-- MySQL ou compatível
+- MySQL
+- Redis
 - Extensões PHP necessárias para o Laravel
 
 ---
