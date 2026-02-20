@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->unique()->constrained('orders')->cascadeOnDelete();
-            $table->unsignedTinyInteger('status');
             $table->string('carrier')->nullable();
             $table->string('tracking')->nullable();
             $table->timestamps();

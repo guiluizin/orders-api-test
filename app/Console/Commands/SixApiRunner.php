@@ -93,7 +93,6 @@ class SixApiRunner extends Command
                 if(!empty($order['fulfillments'])) {
 
                     $payload['shipping'] = [
-                        'status' => $order['fulfillments'][0]['status'],
                         'carrier' => $order['fulfillments'][0]['tracking_company'],
                         'tracking' => $order['fulfillments'][0]['tracking_number'],
                         'created_at' => $order['fulfillments'][0]['created_at'],
