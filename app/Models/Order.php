@@ -31,8 +31,6 @@ class Order extends Model
 
     protected $casts = [
         'number' => 'integer',
-        'usd_total_price' => 'float',
-        'brl_total_price' => 'float',
         'processed_at' => 'timestamp'
     ];
 
@@ -49,6 +47,11 @@ class Order extends Model
     public function shipping(): HasOne {
 
         return $this->hasOne(Shipping::class);
+    }
+
+    public function refund(): HasOne {
+
+        return $this->hasOne(Refund::class);
     }
 
     protected function usdTotalPrice(): Attribute

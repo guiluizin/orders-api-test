@@ -29,8 +29,9 @@ class ApiOrder implements ShouldQueue
     {
         $customer = $this->payload['customer'];
         $order = $this->payload['order'];
-        $product = $this->payload['product'];
+        $products = $this->payload['products'];
         $shipping = $this->payload['shipping'] ?? null;
+        $refund = $this->payload['refund'] ?? null;
 
         $customerModel = Customer::firstOrCreate(
             ['email' => $customer['email']],
@@ -42,24 +43,32 @@ class ApiOrder implements ShouldQueue
             ]
         );
 
-        $productModel = Product::firstOrCreate(
-            ['name' => $product['name']],
-            ['sku' => $product['sku']]
-        );
-
         $orderModel = $customerModel->orders()->create($order);
 
-        $orderModel->orderProducts()->create([
-            'product_id' => $productModel->id,
-            'unit_quantity' => $product['unit_quantity'],
-            'package_quantity' => $product['package_quantity'],
-            'unit_price' => $product['unit_price'],
-            'total_price' => $product['total_price']
-        ]);
+        foreach($products as $product) {
+
+            $productModel = Product::firstOrCreate(
+                ['name' => $product['name']],
+                ['sku' => $product['sku']]
+            );
+
+            $orderModel->orderProducts()->create([
+                'product_id' => $productModel->id,
+                'unit_quantity' => $product['unit_quantity'],
+                'package_quantity' => $product['package_quantity'],
+                'price' => $product['price'],
+                'upsell' => $product['upsell']
+            ]);
+        }
 
         if($shipping) {
 
             $orderModel->shipping()->create($shipping);
+        }
+
+        if($refund) {
+
+            $orderModel->refund()->create($refund);
         }
     }
 }
