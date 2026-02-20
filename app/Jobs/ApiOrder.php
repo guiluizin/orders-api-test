@@ -56,8 +56,8 @@ class ApiOrder implements ShouldQueue
                 'product_id' => $productModel->id,
                 'unit_quantity' => $product['unit_quantity'],
                 'package_quantity' => $product['package_quantity'],
-                'unit_price' => $product['unit_price'],
-                'total_price' => $product['total_price']
+                'price' => $product['price'],
+                'upsell' => $product['upsell']
             ]);
         }
 

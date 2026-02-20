@@ -21,15 +21,16 @@ class OrdersTable
                     ->sortable(),
 
                 TextColumn::make('orderProducts.product.name')
-                    ->label(__('resources.product')),
+                    ->label(__('resources.product'))
+                    ->searchable(),
 
                 TextColumn::make('customer.name')
                     ->label(__('resources.customer'))
                     ->searchable(),
                     
-                TextColumn::make('usd_total_price')
+                TextColumn::make('brl_total_price')
                     ->label(__('resources.value'))
-                    ->money()
+                    ->money('BRL')
                     ->sortable(),
 
                 TextColumn::make('payment_status')

@@ -15,8 +15,8 @@ class OrderProduct extends Model
         'order_id',
         'unit_quantity',
         'package_quantity',
-        'unit_price',
-        'total_price',
+        'price',
+        'upsell'
     ];
 
     protected $casts = [
@@ -34,15 +34,7 @@ class OrderProduct extends Model
         return $this->belongsTo(Product::class);
     }
 
-    protected function unitPrice(): Attribute
-    {
-        return Attribute::make(
-            get: fn (int $value) => $value / 100,
-            set: fn (float $value) => (int) round($value * 100, 2)
-        );
-    }
-
-    protected function totalPrice(): Attribute
+    protected function price(): Attribute
     {
         return Attribute::make(
             get: fn (int $value) => $value / 100,

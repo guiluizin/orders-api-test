@@ -64,13 +64,26 @@ class SixApiRunner extends Command
 
                         $package = $matches[0] ?? null;
 
+                        $upsell = str_contains($product['title'], 'Upsell');
+
+                        $name = ''; // init name
+
+                        if($upsell) {
+
+                            $name = explode(' - ', $product['title'])[0]; // get first value
+                        
+                        } else {
+
+                            $name = $product['title']; // get default
+                        }
+
                         $products[] = [
-                            'name' => $product['title'],
+                            'name' => $name,
                             'sku' => $product['sku'],
                             'unit_quantity' => $product['quantity'],
                             'package_quantity' => $package,
-                            'unit_price' => (float) $product['local_currency_item_price'],
-                            'total_price' => (float) $product['local_currency_item_total_price'],
+                            'price' => (float) $product['price'],
+                            'upsell' => $upsell,
                         ];
                     }  
                 }

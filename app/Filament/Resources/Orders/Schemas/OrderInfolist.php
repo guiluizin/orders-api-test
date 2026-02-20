@@ -21,10 +21,10 @@ class OrderInfolist
                         ->label(__('resources.customer'))
                         ->inlineLabel(),
 
-                    TextEntry::make('total_paid')
+                    TextEntry::make('brl_total_price')
                         ->label(__('resources.value'))
                         ->inlineLabel()
-                        ->money(),
+                        ->money('BRL'),
 
                     TextEntry::make('payment_status')
                         ->label(__('resources.payment_status'))
@@ -67,14 +67,9 @@ class OrderInfolist
                         ->formatStateUsing(fn($state) => __('resources.package_quantity', ['number' => $state]))
                         ->inlineLabel(),
 
-                    TextEntry::make('orderProducts.unit_price')
-                        ->label(__('resources.unit_price'))
-                        ->money()
-                        ->inlineLabel(),
-
-                    TextEntry::make('orderProducts.total_price')
+                    TextEntry::make('orderProducts.price')
                         ->label(__('resources.total_price'))
-                        ->money()
+                        ->money('BRL')
                         ->inlineLabel()
                 ])
                 ->heading(__('resources.product_info'))

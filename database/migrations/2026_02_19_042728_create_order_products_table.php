@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->unsignedTinyInteger('unit_quantity');
             $table->unsignedTinyInteger('package_quantity')->nullable();
-            $table->unsignedInteger('unit_price');
-            $table->unsignedInteger('total_price');
+            $table->unsignedInteger('price');
+            $table->boolean('upsell');
         });
     }
 
