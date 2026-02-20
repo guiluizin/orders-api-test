@@ -21,5 +21,7 @@ return [
     'shipping_info' => 'Dados do Frete',
     'carrier' => 'Transportadora',
     'tracking' => 'Código de Rastreio',
-    'view_tracking' => 'Rastrear Pedido'
+    'view_tracking' => 'Rastrear Pedido',
+    'phone' => 'Telefone',
+    'customer' => 'Cliente'
 ];

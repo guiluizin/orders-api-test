@@ -76,7 +76,7 @@ class SixApiRunner extends Command
                     'customer' => [
                         'name' => "{$order['customer']['first_name']} {$order['customer']['last_name']}",
                         'email' => $order['customer']['email'],
-                        'phone' => preg_replace('/\+/', '', $order['customer']['phone']),
+                        'phone' => $order['customer']['phone'],
                         'created_at' => $order['customer']['created_at'],
                         'updated_at' => $order['customer']['updated_at'],
                     ],
