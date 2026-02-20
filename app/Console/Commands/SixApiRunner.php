@@ -61,7 +61,8 @@ class SixApiRunner extends Command
                 $payload = [
                     'order' => [
                         'number' => $order['number'],
-                        'total_paid' => (float) $order['local_currency_amount'],
+                        'usd_total_price' => (float) str_replace(',', '', $order['local_currency_amount']),
+                        'brl_total_price' => (float) str_replace(',', '', $order['current_total_price']),
                         'payment_status' => $order['payment_status'],
                         'payment_brand' => $order['payment_brand'],
                         'fulfillment_status' => $order['fulfillment_status'],

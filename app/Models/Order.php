@@ -15,7 +15,8 @@ class Order extends Model
     protected $fillable = [
         'customer_id',
         'number',
-        'total_paid',
+        'usd_total_price',
+        'brl_total_price',
         'payment_status',
         'fulfillment_status',
         'payment_brand',
@@ -30,7 +31,8 @@ class Order extends Model
 
     protected $casts = [
         'number' => 'integer',
-        'total_paid' => 'float',
+        'usd_total_price' => 'float',
+        'brl_total_price' => 'float',
         'processed_at' => 'timestamp'
     ];
 
@@ -49,7 +51,15 @@ class Order extends Model
         return $this->hasOne(Shipping::class);
     }
 
-    protected function totalPaid(): Attribute
+    protected function usdTotalPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (float $value) => (int) round($value * 100, 2)
+        );
+    }
+
+    protected function brlTotalPrice(): Attribute
     {
         return Attribute::make(
             get: fn (int $value) => $value / 100,
