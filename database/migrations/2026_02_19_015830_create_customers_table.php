@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->char('phone', 11);
             $table->timestamps();
         });
     }
@@ -27,3 +28,4 @@ return new class extends Migration
         Schema::dropIfExists('customers');
     }
 };
+

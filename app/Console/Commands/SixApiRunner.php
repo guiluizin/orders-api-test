@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\ApiOrder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SixApiRunner extends Command
 {
@@ -26,19 +29,86 @@ class SixApiRunner extends Command
      */
     public function handle()
     {
+        $this->info('API Reader has started.');
+        
         $this->handleConnection();
+
+        $this->info('API Reader has been executed.');
     }
 
     private function handleConnection() {
 
-        // try {
+        try {
 
-        //     $request = Http::timeout(30)
-        //         ->get('https://dev-crm.ogruposix.com/candidato-teste-pratico-backend/dashboard/test-orders');
+            $request = Http::timeout(30)
+                ->get('https://dev-crm.ogruposix.com/candidato-teste-pratico-backend-dashboard/test-orders');
 
+            if(!$request->successful()) {
+
+                throw new HttpException($request->status(), 'Failed to connect.');
+            }
+
+            $json = $request->json();
+
+            foreach($json['orders'] as $value) {
+
+                $order = $value['order'];
+
+                preg_match('/^[^ ]+/', $order['line_items'][0]['variant_title'], $matches); // get package quantity
+
+                $package = $matches[0] ?? null;
+
+                $payload = [
+                    'order' => [
+                        'number' => $order['number'],
+                        'total_paid' => (float) $order['local_currency_amount'],
+                        'payment_status' => $order['payment_status'],
+                        'payment_brand' => $order['payment_brand'],
+                        'fulfillment_status' => $order['fulfillment_status'],
+                        'address_street' => $order['billing_address']['address1'],
+                        'address_zip' => $order['billing_address']['zip'],
+                        'address_province' => $order['billing_address']['province'],
+                        'address_country' => $order['billing_address']['country'],
+                        'processed_at' => $order['processed_at'],
+                        'created_at' => $order['created_at'],
+                        'updated_at' => $order['updated_at'],
+                    ],
+                    'customer' => [
+                        'name' => "{$order['customer']['first_name']} {$order['customer']['last_name']}",
+                        'email' => $order['customer']['email'],
+                        'phone' => preg_replace('/\+/', '', $order['customer']['phone']),
+                        'created_at' => $order['customer']['created_at'],
+                        'updated_at' => $order['customer']['updated_at'],
+                    ],
+                    'product' => [
+                        'name' => $order['line_items'][0]['title'],
+                        'sku' => $order['line_items'][0]['sku'],
+                        'unit_quantity' => $order['line_items'][0]['quantity'],
+                        'package_quantity' => $package,
+                        'unit_price' => (float) $order['line_items'][0]['local_currency_item_price'],
+                        'total_price' => (float) $order['line_items'][0]['local_currency_item_total_price'],
+                    ],
+                ];
+
+                if(!empty($order['fulfillments'])) {
+
+                    $payload['shipping'] = [
+                        'status' => $order['fulfillments'][0]['status'],
+                        'carrier' => $order['fulfillments'][0]['tracking_company'],
+                        'tracking' => $order['fulfillments'][0]['tracking_number'],
+                        'created_at' => $order['fulfillments'][0]['created_at'],
+                        'updated_at' => $order['fulfillments'][0]['updated_at'],
+                    ];
+                }
+
+                ApiOrder::dispatch($payload);
+            }
             
-        // } catch
-        
-        
+        } catch(HttpException $error) {
+
+            $this->error($error->getMessage());
+
+            Log::channel('api-error')->error($error->getMessage());
+        }
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+    public $timestamps = false;
+    
     protected $fillable = [
         'name',
         'sku',

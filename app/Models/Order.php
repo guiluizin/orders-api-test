@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Order extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'customer_id',
         'number',
@@ -21,6 +24,14 @@ class Order extends Model
         'address_province',
         'address_country',
         'processed_at',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $casts = [
+        'number' => 'integer',
+        'total_paid' => 'float',
+        'processed_at' => 'timestamp'
     ];
 
     public function customer(): BelongsTo {
@@ -36,5 +47,13 @@ class Order extends Model
     public function shipping(): HasOne {
 
         return $this->hasOne(Shipping::class);
+    }
+
+    protected function totalPaid(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (float $value) => (int) round($value * 100, 2)
+        );
     }
 }

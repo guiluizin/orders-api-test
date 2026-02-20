@@ -127,6 +127,9 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
-    ],
-
+        'api-error' => [
+            'path' => storage_path('logs/api-error.log'),
+            'level' => 'error'
+        ]
+    ]
 ];
