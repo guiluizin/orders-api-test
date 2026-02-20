@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->unsignedInteger('number')->unique();
-            $table->unsignedInteger('total_paid');
+            $table->unsignedInteger('usd_total_price');
+            $table->unsignedInteger('brl_total_price');
             $table->unsignedTinyInteger('payment_status');
             $table->string('payment_brand', 20);
             $table->string('fulfillment_status', 20);

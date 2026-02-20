@@ -27,7 +27,7 @@ class OrdersTable
                     ->label(__('resources.customer'))
                     ->searchable(),
                     
-                TextColumn::make('total_paid')
+                TextColumn::make('usd_total_price')
                     ->label(__('resources.value'))
                     ->money()
                     ->sortable(),
