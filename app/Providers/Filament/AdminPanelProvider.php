@@ -2,6 +2,16 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\AccountWidget;
+use App\Filament\Widgets\BestFiveSellersTable;
+use App\Filament\Widgets\MediumTicketWidget;
+use App\Filament\Widgets\DailyOrdersChart;
+use App\Filament\Widgets\OrderStats;
+use App\Filament\Widgets\ProvinceRefundsChart;
+use App\Filament\Widgets\TopProductWidget;
+use App\Filament\Widgets\TopTenCitiesWidget;
+use App\Filament\Widgets\UpsellStats;
+use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -27,15 +37,28 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogoHeight('3rem')
+            ->darkMode(true, true)
+            ->favicon(asset('images/favicon.png'))
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([])
+            ->widgets([
+                AccountWidget::class,
+                OrderStats::class,
+                BestFiveSellersTable::class,
+                TopProductWidget::class,
+                MediumTicketWidget::class,
+                TopTenCitiesWidget::class,
+                ProvinceRefundsChart::class,
+                UpsellStats::class,
+                DailyOrdersChart::class
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

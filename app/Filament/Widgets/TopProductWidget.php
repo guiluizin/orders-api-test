@@ -14,8 +14,8 @@ class TopProductWidget extends StatsOverviewWidget
         $product = $this->getTopProduct();
 
         return [
-            Stat::make('Produto Mais Vendido', $product->name)
-                ->description("{$product->count} unidades • R$" . number_format($product->sum / 100, 2, ',', '.'))
+            Stat::make(__('widgets.top_seller_product'), $product->name)
+                ->description(__('widgets.top_seller_description', ['count' => $product->count, 'price' => number_format($product->sum / 100, 2, ',', '.')]))
                 ->color('success')
                 ->icon('solar-inbox-out-outline'),
         ];
@@ -32,6 +32,11 @@ class TopProductWidget extends StatsOverviewWidget
 
     public function getColumns(): int {
 
+        return 1;
+    }
+
+    public function getColumnSpan(): int|string|array
+    {
         return 1;
     }
 }

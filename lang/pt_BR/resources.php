@@ -23,5 +23,13 @@ return [
     'tracking' => 'Código de Rastreio',
     'view_tracking' => 'Rastrear Pedido',
     'phone' => 'Telefone',
-    'customer' => 'Cliente'
+    'customer' => 'Cliente',
+    'product' => 'Produto',
+    'city' => 'Cidade',
+    'pending' => 'Pendente',
+    'authorized' => 'Autorizado',
+    'paid' => 'Pago',
+    'delivered' => 'Entregue',
+    'send' => 'Enviado',
+    'not_sent' => 'Não Enviado'
 ];

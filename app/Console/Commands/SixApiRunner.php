@@ -98,6 +98,7 @@ class SixApiRunner extends Command
                         'fulfillment_status' => $order['fulfillment_status'],
                         'address_street' => $order['billing_address']['address1'],
                         'address_zip' => $order['billing_address']['zip'],
+                        'address_city' => $order['billing_address']['city'],
                         'address_province' => $order['billing_address']['province'],
                         'address_country' => $order['billing_address']['country'],
                         'processed_at' => $order['processed_at'],

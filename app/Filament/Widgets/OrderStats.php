@@ -13,47 +13,47 @@ class OrderStats extends StatsOverviewWidget
     {
         return [
             Stat::make(__('widgets.orders_count'), $this->countOrders())
-                ->description('Total de Pedidos Recebidos')
+                ->description(__('widgets.total_orders'))
                 ->color('info')
                 ->icon('solar-course-up-bold'),
 
-            Stat::make('Receita Total (USD)', $this->totalUSD())
-                ->description('Receita obtida em Dólar')
+            Stat::make(__('widgets.usd_total'), $this->totalUSD())
+                ->description(__('widgets.usd_revenue'))
                 ->color('danger')
                 ->icon('solar-dollar-outline'),
 
-            Stat::make('Receita Total (BRL)', $this->totalBRL())
-                ->description('Receita obtida em Real')
+            Stat::make(__('widgets.brl_total'), $this->totalBRL())
+                ->description(__('widgets.brl_revenue'))
                 ->color('success')
                 ->icon('solar-dollar-outline'),
 
-            Stat::make('Receita Bruta', $this->totalBRL())
-                ->description('Receita bruta total')
+            Stat::make(__('widgets.gross_revenue'), $this->totalBRL())
+                ->description(__('widgets.total_gross_revenue'))
                 ->color('info')
                 ->icon('solar-dollar-outline'),
 
-            Stat::make('Receita Líquida', $this->netRevenue())
-                ->description('Receita bruta total')
+            Stat::make(__('widgets.net_revenue'), $this->netRevenue())
+                ->description(__('widgets.total_net_revenue'))
                 ->color('info')
                 ->icon('solar-dollar-outline'),
 
-            Stat::make('Reembolsos', $this->countRefunds())
-                ->description("{$this->refundsPercentual()}% do total")
+            Stat::make(__('widgets.refunds'), $this->countRefunds())
+                ->description(__('widgets.refunds_percentual', ['percentual' => $this->refundsPercentual()]))
                 ->color($this->getRefundColor())
                 ->icon('solar-course-down-bold'),
 
-            Stat::make('Pedidos Entregues', $this->getFulfillment('Fully Fulfilled'))
-                ->description("{$this->getFulfillmentPercentual('Fully Fulfilled')}% dos pedidos")
+            Stat::make(__('widgets.orders_delivered'), $this->getFulfillment('Fully Fulfilled'))
+                ->description(__('widgets.orders_percentual', ['percentual' => $this->getFulfillmentPercentual('Fully Fulfilled')]))
                 ->color('success')
                 ->icon('solar-delivery-outline'),
 
-            Stat::make('Pedidos Enviados', $this->getFulfillment('Partially Fulfilled'))
-                ->description("{$this->getFulfillmentPercentual('Partially Fulfilled')}% dos pedidos")
+            Stat::make(__('widgets.orders_send'), $this->getFulfillment('Partially Fulfilled'))
+                ->description(__('widgets.orders_percentual', ['percentual' => $this->getFulfillmentPercentual('Partially Fulfilled')]))
                 ->color('warning')
                 ->icon('solar-inbox-out-outline'), 
 
-            Stat::make('Pedidos Não Enviados', $this->getFulfillment('Unfulfilled'))
-                ->description("{$this->getFulfillmentPercentual('Unfulfilled')}% dos pedidos")
+            Stat::make(__('widgets.orders_not_sent'), $this->getFulfillment('Unfulfilled'))
+                ->description(__('widgets.orders_percentual', ['percentual' => $this->getFulfillmentPercentual('Unfulfilled')]))
                 ->color('danger')
                 ->icon('solar-square-transfer-vertical-outline'), 
         ];

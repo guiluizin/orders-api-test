@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('fulfillment_status', 20);
             $table->string('address_street');
             $table->char('address_zip', 5);
+            $table->string('address_city');
             $table->string('address_province');
             $table->string('address_country');
             $table->timestamp('processed_at')->nullable();

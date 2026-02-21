@@ -22,6 +22,7 @@ class Order extends Model
         'payment_brand',
         'address_street',
         'address_zip',
+        'address_city',
         'address_province',
         'address_country',
         'processed_at',

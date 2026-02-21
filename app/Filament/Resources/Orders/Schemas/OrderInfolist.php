@@ -30,9 +30,9 @@ class OrderInfolist
                         ->label(__('resources.payment_status'))
                         ->inlineLabel()
                         ->formatStateUsing(fn($state) => match($state) {
-                            1 => 'Pendente',
-                            2 => 'Autorizado',
-                            3 => 'Pago'
+                            1 => __('resources.pending'),
+                            2 => __('resources.authorized'),
+                            3 => __('resources.paid')
                         })
                         ->color(fn($state) => match($state) {
                             1 => 'warning',
@@ -80,9 +80,9 @@ class OrderInfolist
                     ->label(__('resources.fulfillment_status'))
                     ->inlineLabel()
                     ->formatStateUsing(fn($state) => match($state) {
-                        'Fully Fulfilled' => 'Entregue',
-                        'Partially Fulfilled' => 'Enviado',
-                        'Unfulfilled' => 'Não Enviado'
+                        'Fully Fulfilled' => __('resources.delivered'),
+                        'Partially Fulfilled' => __('resources.send'),
+                        'Unfulfilled' => __('resources.not_sent'),
                     })
                     ->color(fn($state) => match($state) {
                         'Fully Fulfilled' => 'success',

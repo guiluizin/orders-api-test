@@ -1,5 +1,32 @@
 <?php
 
 return [
-    'orders_count' => 'Total de Pedidos'
+    'orders_count' => 'Total de Pedidos',
+    'daily_orders' => 'Pedidos por Dia',
+    'medium_ticket' => 'Ticket Médio',
+    'user_medium_ticket' => 'Ticket médio por usuário',
+    'top_five_revenue' => 'Top 5 produtos por Receita',
+    'province' => 'Estado',
+    'province_refunds' => 'Reembolsos por Estado',
+    'total_orders' => 'Total de Pedidos Recebidos',
+    'usd_total' => 'Receita Total (USD)',
+    'usd_revenue' => 'Receita obtida em Dólar',
+    'brl_total' => 'Receita Total (BRL)',
+    'brl_revenue' => 'Receita obtida em Real',
+    'gross_revenue' => 'Receita Bruta',
+    'total_gross_revenue' => 'Receita Bruta Total',
+    'net_revenue' => 'Receita Líquida',
+    'total_net_revenue' => 'Receita Líquida Total',
+    'refunds' => 'Reembolsos',
+    'refunds_percentual' => ':percentual% do total',
+    'orders_delivered' => 'Pedidos Entregues',
+    'orders_percentual' => ':percentual% dos pedidos',
+    'orders_send' => 'Pedidos Enviados',
+    'orders_not_sent' => 'Pedidos não Enviados',
+    'top_seller_product' => 'Produto Mais Vendido',
+    'top_seller_description' => ':count unidades • R$:price',
+    'top_ten_cities' => 'Top 10 cidades com mais vendas',
+    'upsell_orders' => 'Pedidos com Upsell',
+    'front_orders' => 'Pedidos somente Front',
+    'upsell_percentual' => ':percentual% de conversão'
 ];
